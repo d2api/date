@@ -4,7 +4,7 @@ const XUR_STAY_DURATION = 4;
 const DAYS_IN_A_WEEK = 7;
 
 /** gets data about time-based destiny ritual periods */
-export default class DestinyDate {
+export class DestinyDate {
   // fixed number methods using known info,
   // that return useful milestones like weekly reset and xur
 
@@ -43,7 +43,7 @@ export default class DestinyDate {
 
     return [date, endDate];
   }
-  
+
   /**
    * given date (defaults to now),
    * returns a tuple of the next game-day's start and end Dates
@@ -184,3 +184,5 @@ export default class DestinyDate {
     date.setUTCMilliseconds(0);
   }
 }
+
+export default DestinyDate;

@@ -1,5 +1,5 @@
 /** gets data about time-based destiny ritual periods */
-export default class DestinyDate {
+export declare class DestinyDate {
     /**
      * given date (defaults to now),
      * returns a tuple of the current game-week's start and end Dates
@@ -49,3 +49,4 @@ export default class DestinyDate {
     static nextWeeklyRitual(date: string | number | Date | undefined, dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6, hourOfDayUTC: number, lengthInDays: number): readonly [Date, Date];
     private static resetMinorIncrements;
 }
+export default DestinyDate;
