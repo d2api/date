@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "lib",
+    "lib": ["ES2020"],
+    "module": "esnext",
+    "declaration": true,
+    "moduleResolution": "node",
+    "target": "ES2020",
+    "resolveJsonModule": true,
+    "strictNullChecks": true
+  }
+}

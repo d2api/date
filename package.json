@@ -1,0 +1,10 @@
+{
+  "name": "destinydate",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "type": "module",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@types/node": "^14.0.11"
+  }
+}
