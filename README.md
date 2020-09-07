@@ -1,17 +1,34 @@
 # destinydate
 a date class for determining info about the meaningful periods of time in d2
 
+install
+```sh
+npm install d2api/destinydate
+```
+
 ```js
 import DestinyDate from "destinydate";
 
-```
-# this readme is wrong at this point
-the goal is to make a simple discord bot possible in about as much time as it takes to type `npm install now-answer-me`
+// it's Sunday, Sept 6 right now
 
-```js
-import { addCommand, init } from "now-answer-me";
+DestinyDate.currentXur()
+// -> [ 2020-09-04T17:00:00.000Z, 2020-09-08T17:00:00.000Z ]
 
-addCommand({ command: "hello", response: 'hi!' });
+DestinyDate.nextXur()
+// -> [ 2020-09-11T17:00:00.000Z, 2020-09-15T17:00:00.000Z ]
 
-init("smIcXn83zPK.1FEzAIM0GzMINbgJ1zeM1cNWzANOLT6NDVzZ50I9eY.l85E");
+// but what if it was last thursday?
+
+DestinyDate.currentXur("Sep 03 2020 09:59:59 GMT-0700");
+// -> [ undefined, undefined ]
+
+// consume via destructuring
+
+const [begin, end] = DestinyDate.currentWeek();
+
+`this week began ${begin.toLocaleString()}`
+// -> this week began 9/1/2020, 10:00:00 AM
+
+`this week will end ${end.toLocaleString()}`
+// -> this week will end 9/8/2020, 10:00:00 AM
 ```
