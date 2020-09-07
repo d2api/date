@@ -3,6 +3,7 @@ a date class for determining info about the meaningful periods of time in d2
 
 ```sh
 npm install d2api/destinydate
+# or yarn cause yarn is ...less bad and knows how to properly update modules from github
 ```
 
 ```js
