@@ -30,4 +30,8 @@ const [begin, end] = DestinyDate.currentWeek();
 
 `this week will end ${end.toLocaleString()}`
 // -> this week will end 9/8/2020, 10:00:00 AM
+
+// maybe you hate end dates
+const [xurBegin] = DestinyDate.currentXur();
+`xur is ${xurBegin ? `around since ${xurBegin}` : "not around right now"}`;
 ```
