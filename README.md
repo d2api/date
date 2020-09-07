@@ -34,4 +34,13 @@ const [begin, end] = DestinyDate.currentWeek();
 // maybe you hate end dates
 const [xurBegin] = DestinyDate.currentXur();
 `xur is ${xurBegin ? `around since ${xurBegin}` : "not around right now"}`;
+
+// daily resets
+
+const [begin, end] = DestinyDate.currentDay();
+
+`today began ${begin.toLocaleString()}`
+//-> today began 9/6/2020, 10:00:00 AM
+`today will end ${end.toLocaleString()}`
+//-> today will end 9/7/2020, 10:00:00 AM
 ```
