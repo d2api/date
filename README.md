@@ -1,7 +1,6 @@
 # destinydate
 a date class for determining info about the meaningful periods of time in d2
 
-install
 ```sh
 npm install d2api/destinydate
 ```
@@ -9,7 +8,7 @@ npm install d2api/destinydate
 ```js
 import DestinyDate from "destinydate";
 
-// it's Sunday, Sept 6 right now
+// it's Sunday, Sept 6 right now, btw
 
 DestinyDate.currentXur()
 // -> [ 2020-09-04T17:00:00.000Z, 2020-09-08T17:00:00.000Z ]
