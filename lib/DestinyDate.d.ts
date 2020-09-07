@@ -1,5 +1,5 @@
 /** gets data about time-based destiny ritual periods */
-export declare class DestinyDate {
+export default class DestinyDate {
     /**
      * given date (defaults to now),
      * returns a tuple of the current game-week's start and end Dates
