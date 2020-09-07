@@ -12,6 +12,16 @@ export default class DestinyDate {
     static nextWeek(date?: number | string | Date): readonly [Date, Date];
     /**
      * given date (defaults to now),
+     * returns a tuple of the current game-day's start and end Dates
+     */
+    static currentDay(date?: number | string | Date): Date[];
+    /**
+     * given date (defaults to now),
+     * returns a tuple of the next game-day's start and end Dates
+     */
+    static nextDay(date?: number | string | Date): Date[];
+    /**
+     * given date (defaults to now),
      * returns a tuple of xur's next arrival and departure dates
      */
     static nextXur(date?: number | string | Date): readonly [Date, Date];

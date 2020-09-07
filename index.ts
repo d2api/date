@@ -1,3 +1,8 @@
+const UTC_RESET_HOUR = 17;
+const XUR_ARRIVAL_DAY = 5;
+const XUR_STAY_DURATION = 4;
+const DAYS_IN_A_WEEK = 7;
+
 /** gets data about time-based destiny ritual periods */
 export default class DestinyDate {
   // fixed number methods using known info,
@@ -8,14 +13,56 @@ export default class DestinyDate {
    * returns a tuple of the current game-week's start and end Dates
    */
   static currentWeek(date: number | string | Date = new Date()) {
-    return this.recentWeeklyRitual(date, 2, 17, 7);
+    return this.recentWeeklyRitual(date, 2, UTC_RESET_HOUR, DAYS_IN_A_WEEK);
   }
   /**
    * given date (defaults to now),
    * returns a tuple of next game-week's start and end Dates
    */
   static nextWeek(date: number | string | Date = new Date()) {
-    return this.nextWeeklyRitual(date, 2, 17, 7);
+    return this.nextWeeklyRitual(date, 2, UTC_RESET_HOUR, DAYS_IN_A_WEEK);
+  }
+
+  /**
+   * given date (defaults to now),
+   * returns a tuple of the current game-day's start and end Dates
+   */
+  static currentDay(date: number | string | Date = new Date()) {
+    date = new Date(date);
+    this.resetMinorIncrements(date);
+
+    // if it's before reset time, we want yesterday's reset
+    if (date.getUTCHours() < UTC_RESET_HOUR)
+      date.setUTCDate(date.getUTCDate() - 1);
+
+    // now that hour's been accounted for, make it hourOfDayUTC
+    date.setUTCHours(UTC_RESET_HOUR);
+
+    const endDate = new Date(date);
+    endDate.setUTCDate(endDate.getUTCDate() + 1);
+
+    return [date, endDate];
+  }
+  
+  /**
+   * given date (defaults to now),
+   * returns a tuple of the next game-day's start and end Dates
+   */
+  static nextDay(date: number | string | Date = new Date()) {
+    date = new Date(date);
+    this.resetMinorIncrements(date);
+
+    // if it's after reset time, we want tomorrow's reset
+    if (date.getUTCHours() < UTC_RESET_HOUR)
+      date.setUTCDate(date.getUTCDate() + 1);
+
+    // now that hour's been accounted for, make it hourOfDayUTC
+    date.setUTCHours(UTC_RESET_HOUR);
+
+    const endDate = new Date(date);
+    endDate.setUTCDate(endDate.getUTCDate() + 1);
+
+    return [date, endDate];
   }
 
   /**
@@ -23,7 +70,12 @@ export default class DestinyDate {
    * returns a tuple of xur's next arrival and departure dates
    */
   static nextXur(date: number | string | Date = new Date()) {
-    return this.nextWeeklyRitual(date, 5, 17, 4);
+    return this.nextWeeklyRitual(
+      date,
+      XUR_ARRIVAL_DAY,
+      UTC_RESET_HOUR,
+      XUR_STAY_DURATION
+    );
   }
   /**
    * given date (defaults to now),
@@ -31,7 +83,12 @@ export default class DestinyDate {
    * or undefineds if xur isn't in town
    */
   static currentXur(date: number | string | Date = new Date()) {
-    return this.currentWeeklyRitual(date, 5, 17, 4);
+    return this.currentWeeklyRitual(
+      date,
+      XUR_ARRIVAL_DAY,
+      UTC_RESET_HOUR,
+      XUR_STAY_DURATION
+    );
   }
 
   // supporting methods to do the calculations
