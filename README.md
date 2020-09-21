@@ -1,46 +1,47 @@
-# destinydate
-a date class for determining info about the meaningful periods of time in d2
+# DestinyDate
+a date class for determining info about the meaningful periods of time in destiny 2
 
 ```sh
-npm install d2api/destinydate
+npm install @d2api/date
 ```
 
 ```js
-import DestinyDate from "destinydate";
+import DestinyDate from "@d2api/date";
 
 // it's Sunday, Sept 6 right now, btw
 
 DestinyDate.currentXur()
-// -> [ 2020-09-04T17:00:00.000Z, 2020-09-08T17:00:00.000Z ]
+// -> { start: 2020-09-04T17:00:00.000Z, end: 2020-09-08T17:00:00.000Z }
 
 DestinyDate.nextXur()
-// -> [ 2020-09-11T17:00:00.000Z, 2020-09-15T17:00:00.000Z ]
+// -> { start: 2020-09-11T17:00:00.000Z, end: 2020-09-15T17:00:00.000Z }
 
 // but what if it was last thursday?
 
 DestinyDate.currentXur("Sep 03 2020 09:59:59 GMT-0700");
-// -> [ undefined, undefined ]
+// -> { start: undefined, end: undefined }
 
-// consume via destructuring
+// consuming via destructuring
 
-const [begin, end] = DestinyDate.currentWeek();
+const { start, end } = DestinyDate.currentWeek();
 
-`this week began ${begin.toLocaleString()}`
+`this week began ${start.toLocaleString()}`
 // -> this week began 9/1/2020, 10:00:00 AM
 
 `this week will end ${end.toLocaleString()}`
 // -> this week will end 9/8/2020, 10:00:00 AM
 
 // maybe you hate end dates
-const [xurBegin] = DestinyDate.currentXur();
-`xur is ${xurBegin ? `around since ${xurBegin}` : "not around right now"}`;
+
+const { start } = DestinyDate.currentXur();
+`xur is ${start ? `around since ${start}` : "not around right now"}`;
 
 // daily resets
 
-const [begin, end] = DestinyDate.currentDay();
+const currentDay = DestinyDate.currentDay();
 
-`today began ${begin.toLocaleString()}`
+`today began ${currentDay.start.toLocaleString()}`
 //-> today began 9/6/2020, 10:00:00 AM
-`today will end ${end.toLocaleString()}`
+`today will end ${currentDay.end.toLocaleString()}`
 //-> today will end 9/7/2020, 10:00:00 AM
 ```

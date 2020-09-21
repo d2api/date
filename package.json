@@ -1,5 +1,5 @@
 {
-  "name": "destinydate",
+  "name": "@d2api/date",
   "version": "1.0.2",
   "main": "lib/index.js",
   "type": "module",

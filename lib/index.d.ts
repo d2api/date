@@ -2,51 +2,84 @@
 export declare class DestinyDate {
     /**
      * given date (defaults to now),
-     * returns a tuple of the current game-week's start and end Dates
+     * returns the current game-week's start and end Dates
      */
-    static currentWeek(date?: number | string | Date): readonly [Date, Date];
+    static currentWeek(date?: number | string | Date): {
+        start: Date;
+        end: Date;
+    };
     /**
      * given date (defaults to now),
-     * returns a tuple of next game-week's start and end Dates
+     * returns next game-week's start and end Dates
      */
-    static nextWeek(date?: number | string | Date): readonly [Date, Date];
+    static nextWeek(date?: number | string | Date): {
+        start: Date;
+        end: Date;
+    };
     /**
      * given date (defaults to now),
-     * returns a tuple of the current game-day's start and end Dates
+     * returns the current game-day's start and end Dates
      */
-    static currentDay(date?: number | string | Date): Date[];
+    static currentDay(date?: number | string | Date): {
+        start: Date;
+        end: Date;
+    };
     /**
      * given date (defaults to now),
-     * returns a tuple of the next game-day's start and end Dates
+     * returns the next game-day's start and end Dates
      */
-    static nextDay(date?: number | string | Date): Date[];
+    static nextDay(date?: number | string | Date): {
+        start: Date;
+        end: Date;
+    };
     /**
      * given date (defaults to now),
-     * returns a tuple of xur's next arrival and departure dates
+     * returns xur's next arrival and departure dates
      */
-    static nextXur(date?: number | string | Date): readonly [Date, Date];
+    static nextXur(date?: number | string | Date): {
+        start: Date;
+        end: Date;
+    };
     /**
      * given date (defaults to now),
-     * returns a tuple of xur's current arrival and departure dates,
+     * returns xur's current arrival and departure dates,
      * or undefineds if xur isn't in town
      */
-    static currentXur(date?: number | string | Date): readonly [Date, Date] | [undefined, undefined];
+    static currentXur(date?: number | string | Date): {
+        start: Date;
+        end: Date;
+    } | {
+        start?: undefined;
+        end?: undefined;
+    };
     /**
      * given date (defaults to now), and ritual params,
-     * returns a tuple of most recent ritual's start and end Dates
+     * returns the most recent ritual's start and end Dates
      */
-    static recentWeeklyRitual(date: string | number | Date | undefined, dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6, hourOfDayUTC: number, lengthInDays: number): readonly [Date, Date];
+    static recentWeeklyRitual(date: string | number | Date | undefined, dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6, hourOfDayUTC: number, lengthInDays: number): {
+        start: Date;
+        end: Date;
+    };
     /**
      * given date (defaults to now), and ritual params,
-     * returns a tuple of the start and end Dates of the ritual we're in,
+     * returns the start and end Dates of the ritual we're in,
      * or undefineds if we aren't in one
      */
-    static currentWeeklyRitual(date: string | number | Date | undefined, dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6, hourOfDayUTC: number, lengthInDays: number): readonly [Date, Date] | [undefined, undefined];
+    static currentWeeklyRitual(date: string | number | Date | undefined, dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6, hourOfDayUTC: number, lengthInDays: number): {
+        start: Date;
+        end: Date;
+    } | {
+        start?: undefined;
+        end?: undefined;
+    };
     /**
      * given date (defaults to now), and ritual params,
-     * returns a tuple of next ritual's start and end Dates
+     * returns the next ritual's start and end Dates
      */
-    static nextWeeklyRitual(date: string | number | Date | undefined, dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6, hourOfDayUTC: number, lengthInDays: number): readonly [Date, Date];
+    static nextWeeklyRitual(date: string | number | Date | undefined, dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6, hourOfDayUTC: number, lengthInDays: number): {
+        start: Date;
+        end: Date;
+    };
     private static resetMinorIncrements;
 }
 export default DestinyDate;

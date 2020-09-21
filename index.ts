@@ -10,14 +10,14 @@ export class DestinyDate {
 
   /**
    * given date (defaults to now),
-   * returns a tuple of the current game-week's start and end Dates
+   * returns the current game-week's start and end Dates
    */
   static currentWeek(date: number | string | Date = new Date()) {
     return this.recentWeeklyRitual(date, 2, UTC_RESET_HOUR, DAYS_IN_A_WEEK);
   }
   /**
    * given date (defaults to now),
-   * returns a tuple of next game-week's start and end Dates
+   * returns next game-week's start and end Dates
    */
   static nextWeek(date: number | string | Date = new Date()) {
     return this.nextWeeklyRitual(date, 2, UTC_RESET_HOUR, DAYS_IN_A_WEEK);
@@ -25,49 +25,38 @@ export class DestinyDate {
 
   /**
    * given date (defaults to now),
-   * returns a tuple of the current game-day's start and end Dates
+   * returns the current game-day's start and end Dates
    */
   static currentDay(date: number | string | Date = new Date()) {
-    date = new Date(date);
-    this.resetMinorIncrements(date);
+    const start = new Date(date);
+    this.resetMinorIncrements(start);
 
     // if it's before reset time, we want yesterday's reset
-    if (date.getUTCHours() < UTC_RESET_HOUR)
-      date.setUTCDate(date.getUTCDate() - 1);
+    if (start.getUTCHours() < UTC_RESET_HOUR)
+      start.setUTCDate(start.getUTCDate() - 1);
 
     // now that hour's been accounted for, make it hourOfDayUTC
-    date.setUTCHours(UTC_RESET_HOUR);
+    start.setUTCHours(UTC_RESET_HOUR);
 
-    const endDate = new Date(date);
-    endDate.setUTCDate(endDate.getUTCDate() + 1);
+    const end = new Date(start);
+    end.setUTCDate(end.getUTCDate() + 1);
 
-    return [date, endDate];
+    return { start, end };
   }
 
   /**
    * given date (defaults to now),
-   * returns a tuple of the next game-day's start and end Dates
+   * returns the next game-day's start and end Dates
    */
   static nextDay(date: number | string | Date = new Date()) {
-    date = new Date(date);
-    this.resetMinorIncrements(date);
-
-    // if it's after reset time, we want tomorrow's reset
-    if (date.getUTCHours() < UTC_RESET_HOUR)
-      date.setUTCDate(date.getUTCDate() + 1);
-
-    // now that hour's been accounted for, make it hourOfDayUTC
-    date.setUTCHours(UTC_RESET_HOUR);
-
-    const endDate = new Date(date);
-    endDate.setUTCDate(endDate.getUTCDate() + 1);
-
-    return [date, endDate];
+    const tomorrow = new Date(date);
+    tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+    return this.currentDay(tomorrow);
   }
 
   /**
    * given date (defaults to now),
-   * returns a tuple of xur's next arrival and departure dates
+   * returns xur's next arrival and departure dates
    */
   static nextXur(date: number | string | Date = new Date()) {
     return this.nextWeeklyRitual(
@@ -79,7 +68,7 @@ export class DestinyDate {
   }
   /**
    * given date (defaults to now),
-   * returns a tuple of xur's current arrival and departure dates,
+   * returns xur's current arrival and departure dates,
    * or undefineds if xur isn't in town
    */
   static currentXur(date: number | string | Date = new Date()) {
@@ -95,38 +84,38 @@ export class DestinyDate {
 
   /**
    * given date (defaults to now), and ritual params,
-   * returns a tuple of most recent ritual's start and end Dates
+   * returns the most recent ritual's start and end Dates
    */
   static recentWeeklyRitual(
     date: number | string | Date = new Date(),
     dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6,
     hourOfDayUTC: number,
     lengthInDays: number
-  ): readonly [Date, Date] {
-    date = new Date(date);
-    this.resetMinorIncrements(date);
+  ) {
+    let start = new Date(date);
+    this.resetMinorIncrements(start);
 
     // if it's before hourOfDayUTC, today wasn't the most recent start, so start looking yesterday
-    if (date.getUTCHours() < hourOfDayUTC)
-      date.setUTCDate(date.getUTCDate() - 1);
+    if (start.getUTCHours() < hourOfDayUTC)
+      start.setUTCDate(start.getUTCDate() - 1);
 
     // now that hour's been accounted for, make it hourOfDayUTC
-    date.setUTCHours(hourOfDayUTC);
+    start.setUTCHours(hourOfDayUTC);
 
     // rewind until we hit dayOfWeek (we might be on it already)
-    while (date.getUTCDay() !== dayOfWeek) {
-      date.setUTCDate(date.getUTCDate() - 1);
+    while (start.getUTCDay() !== dayOfWeek) {
+      start.setUTCDate(start.getUTCDate() - 1);
     }
 
-    const endDate = new Date(date);
-    endDate.setUTCDate(endDate.getUTCDate() + lengthInDays);
+    const end = new Date(start);
+    end.setUTCDate(end.getUTCDate() + lengthInDays);
 
-    return [date, endDate];
+    return { start, end };
   }
 
   /**
    * given date (defaults to now), and ritual params,
-   * returns a tuple of the start and end Dates of the ritual we're in,
+   * returns the start and end Dates of the ritual we're in,
    * or undefineds if we aren't in one
    */
   static currentWeeklyRitual(
@@ -134,47 +123,46 @@ export class DestinyDate {
     dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6,
     hourOfDayUTC: number,
     lengthInDays: number
-  ): readonly [Date, Date] | [undefined, undefined] {
+  ) {
     const now = Date.now();
-    const [startDate, endDate] = this.recentWeeklyRitual(
+    const { start, end } = this.recentWeeklyRitual(
       date,
       dayOfWeek,
       hourOfDayUTC,
       lengthInDays
     );
-    if (startDate.getTime() < now && now < endDate.getTime())
-      return [startDate, endDate];
-    return [undefined, undefined];
+    if (start.getTime() < now && now < end.getTime()) return { start, end };
+    return {};
   }
 
   /**
    * given date (defaults to now), and ritual params,
-   * returns a tuple of next ritual's start and end Dates
+   * returns the next ritual's start and end Dates
    */
   static nextWeeklyRitual(
     date: number | string | Date = new Date(),
     dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6,
     hourOfDayUTC: number,
     lengthInDays: number
-  ): readonly [Date, Date] {
-    date = new Date(date);
-    this.resetMinorIncrements(date);
+  ) {
+    const start = new Date(date);
+    this.resetMinorIncrements(start);
 
     // if it's at, or after, hourOfDayUTC, today can't possibly be the start of the next ritual, so increment the date
-    if (date.getUTCHours() >= hourOfDayUTC)
-      date.setUTCDate(date.getUTCDate() + 1);
+    if (start.getUTCHours() >= hourOfDayUTC)
+      start.setUTCDate(start.getUTCDate() + 1);
 
     // now that hour's been accounted for, make it hourOfDayUTC
-    date.setUTCHours(hourOfDayUTC);
+    start.setUTCHours(hourOfDayUTC);
 
     // fast forward until we hit dayOfWeek (we might be on it already)
-    while (date.getUTCDay() !== dayOfWeek) {
-      date.setUTCDate(date.getUTCDate() + 1);
+    while (start.getUTCDay() !== dayOfWeek) {
+      start.setUTCDate(start.getUTCDate() + 1);
     }
-    const endDate = new Date(date);
-    endDate.setUTCDate(endDate.getUTCDate() + lengthInDays);
+    const end = new Date(start);
+    end.setUTCDate(end.getUTCDate() + lengthInDays);
 
-    return [date, endDate];
+    return { start, end };
   }
 
   // get rid of time increments we don't want while finding an hour
