@@ -20,7 +20,9 @@ DestinyDate.nextXur()
 
 DestinyDate.currentXur("Sep 03 2020 09:59:59 GMT-0700");
 // -> { start: undefined, end: undefined }
+```
 
+```js
 // consuming via destructuring
 
 const { start, end } = DestinyDate.currentWeek();
@@ -30,12 +32,16 @@ const { start, end } = DestinyDate.currentWeek();
 
 `this week will end ${end.toLocaleString()}`
 // -> this week will end 9/8/2020, 10:00:00 AM
+```
 
-// maybe you hate end dates
+```js
+// maybe you only need an end date
 
 const { start } = DestinyDate.currentXur();
 `xur is ${start ? `around since ${start}` : "not around right now"}`;
+```
 
+```js
 // daily resets
 
 const currentDay = DestinyDate.currentDay();
