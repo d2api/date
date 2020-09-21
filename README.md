@@ -35,7 +35,7 @@ const { start, end } = DestinyDate.currentWeek();
 ```
 
 ```js
-// maybe you only need an end date
+// maybe you only need a start date
 
 const { start } = DestinyDate.currentXur();
 `xur is ${start ? `around since ${start}` : "not around right now"}`;
