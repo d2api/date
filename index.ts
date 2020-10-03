@@ -124,7 +124,7 @@ export class DestinyDate {
     hourOfDayUTC: number,
     lengthInDays: number
   ) {
-    const now = Date.now();
+    const now = new Date(date).getTime();
     const { start, end } = this.recentWeeklyRitual(
       date,
       dayOfWeek,
