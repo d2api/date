@@ -1,21 +1,21 @@
-import DestinyDate from "./index.js";
+import { currentXur, nextXur, currentWeek, currentDay } from "./index.js";
 
 // it's Sunday, Sept 6 right now, btw
 
-console.log(DestinyDate.currentXur());
+console.log(currentXur());
 // -> [ 2020-09-04T17:00:00.000Z, 2020-09-08T17:00:00.000Z ]
 
-console.log(DestinyDate.nextXur());
+console.log(nextXur());
 // -> [ 2020-09-11T17:00:00.000Z, 2020-09-15T17:00:00.000Z ]
 
 // but what if it was last thursday?
 
-console.log(DestinyDate.currentXur("Sep 03 2020 09:59:59 GMT-0700"));
+console.log(currentXur("Sep 03 2020 09:59:59 GMT-0700"));
 // -> [ undefined, undefined ]
 
 // consume via destructuring
 {
-  const { start, end } = DestinyDate.currentWeek();
+  const { start, end } = currentWeek();
 
   console.log(`this week began ${start.toLocaleString()}`);
   // -> this week began 9/1/2020, 10:00:00 AM
@@ -26,7 +26,7 @@ console.log(DestinyDate.currentXur("Sep 03 2020 09:59:59 GMT-0700"));
 
 // maybe you hate end dates
 {
-  const { start } = DestinyDate.currentXur();
+  const { start } = currentXur();
   console.log(
     `xur is ${start ? `around since ${start}` : "not around right now"}`
   );
@@ -34,7 +34,7 @@ console.log(DestinyDate.currentXur("Sep 03 2020 09:59:59 GMT-0700"));
 
 // daily resets
 {
-  let { start, end } = DestinyDate.currentDay();
+  let { start, end } = currentDay();
 
   console.log(`today began ${start.toLocaleString()}`);
   //-> today began 9/6/2020, 10:00:00 AM
