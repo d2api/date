@@ -1,5 +1,5 @@
 # @d2api/date
-a date linrary for determining info about the meaningful periods of time in destiny 2
+a date library for determining info about meaningful periods of time in destiny 2
 
 ```sh
 npm install @d2api/date
