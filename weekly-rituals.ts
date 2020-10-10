@@ -4,12 +4,12 @@ import {
   UTC_RESET_HOUR,
   XUR_ARRIVAL_DAY,
   XUR_STAY_DURATION,
-} from "./values";
+} from "./values.js";
 import {
   currentWeeklyRitual,
   nextWeeklyRitual,
   recentWeeklyRitual,
-} from "./weekly";
+} from "./weekly.js";
 
 /**
  * given date (defaults to now),
