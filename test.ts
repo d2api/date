@@ -1,4 +1,5 @@
 import { currentXur, nextXur, currentWeek, currentDay } from "./index.js";
+import { currentSeason } from "./season.js";
 
 // it's Sunday, Sept 6 right now, btw
 
@@ -26,7 +27,7 @@ console.log(currentXur("Sep 03 2020 09:59:59 GMT-0700"));
 
 // maybe you hate end dates
 {
-  const { start } = currentXur();
+  const { start } = currentXur() ?? {};
   console.log(
     `xur is ${start ? `around since ${start}` : "not around right now"}`
   );
@@ -34,10 +35,10 @@ console.log(currentXur("Sep 03 2020 09:59:59 GMT-0700"));
 
 // daily resets
 {
-  let { start, end } = currentDay();
+  let { start, end, seasonNumber } = currentSeason();
 
-  console.log(`today began ${start.toLocaleString()}`);
-  //-> today began 9/6/2020, 10:00:00 AM
-  console.log(`today will end ${end.toLocaleString()}`);
-  //-> today will end 9/7/2020, 10:00:00 AM
+  console.log(`season ${seasonNumber} lasts from ${start?.toLocaleString()}`);
+  //-> season 11 lasts from 6/9/2020, 10:00:00 AM
+  console.log(`until ${end?.toLocaleString()}`);
+  //-> until 11/10/2020, 9:00:00 AM
 }

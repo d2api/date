@@ -43,7 +43,7 @@ export function nextXur(date: number | string | Date = new Date()) {
 /**
  * given date (defaults to now),
  * returns xur's current arrival and departure dates,
- * or undefineds if xur isn't in town
+ * or two undefineds if xur isn't in town
  */
 export function currentXur(date: number | string | Date = new Date()) {
   return currentWeeklyRitual(

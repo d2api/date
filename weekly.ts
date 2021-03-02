@@ -9,7 +9,7 @@ import { resetMinorIncrements } from "./util.js";
 /**
  * given date (defaults to now), and ritual params,
  * returns the start and end Dates of the ritual we're in,
- * or undefineds if we aren't in one
+ * or two undefineds if we aren't in one
  */
 export function currentWeeklyRitual(
   date: number | string | Date = new Date(),
@@ -25,7 +25,7 @@ export function currentWeeklyRitual(
     lengthInDays
   );
   if (start.getTime() < now && now < end.getTime()) return { start, end };
-  return {};
+  return;
 }
 
 /**
